@@ -1,7 +1,7 @@
 package main
 
 import (
-  "./golisp"
+  "github.com/autopp/golisp"
   "fmt"
 )
 
