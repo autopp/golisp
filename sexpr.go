@@ -14,50 +14,50 @@ type Cons struct {
   Car, Cdr SExpr
 }
 
-func (sexpr Bool)isNil bool {
+func (sexpr Bool)isNil() bool {
   return false
 }
 
-func (sexpr Bool)isAtom bool {
+func (sexpr Bool)isAtom() bool {
   return true
 }
 
-func (sexpr Bool)isList bool {
+func (sexpr Bool)isList() bool {
   return false
 }
 
-func (sexpr Number)isNil bool {
+func (sexpr Number)isNil() bool {
   return false
 }
 
-func (sexpr Number)isAtom bool {
+func (sexpr Number)isAtom() bool {
   return true
 }
 
-func (sexpr Number)isList bool {
+func (sexpr Number)isList() bool {
   return false
 }
 
-func (sexpr Symbol)isNil bool {
+func (sexpr Symbol)isNil() bool {
   return false
 }
 
-func (sexpr Symbol)isAtom bool {
+func (sexpr Symbol)isAtom() bool {
   return true
 }
 
-func (sexpr Symbol)isList bool {
+func (sexpr Symbol)isList() bool {
   return false
 }
 
-func (sexpr *Nil)isNil bool {
+func (sexpr *Nil)isNil() bool {
   return false
 }
 
-func (sexpr *Nil)isAtom bool {
+func (sexpr *Nil)isAtom() bool {
   return true
 }
 
-func (sexpr *Nil)isList bool {
+func (sexpr *Nil)isList() bool {
   return true
 }
