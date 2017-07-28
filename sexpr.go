@@ -1,9 +1,9 @@
 package golisp
 
 type SExpr interface {
-	isNil() bool
-	isAtom() bool
-	isList() bool
+	IsNil() bool
+	IsAtom() bool
+	IsLIst() bool
 }
 
 type Bool bool
@@ -14,50 +14,50 @@ type Cons struct {
 	Car, Cdr SExpr
 }
 
-func (sexpr Bool) isNil() bool {
+func (sexpr Bool) IsNil() bool {
 	return false
 }
 
-func (sexpr Bool) isAtom() bool {
+func (sexpr Bool) IsAtom() bool {
 	return true
 }
 
-func (sexpr Bool) isList() bool {
+func (sexpr Bool) IsLIst() bool {
 	return false
 }
 
-func (sexpr Number) isNil() bool {
+func (sexpr Number) IsNil() bool {
 	return false
 }
 
-func (sexpr Number) isAtom() bool {
+func (sexpr Number) IsAtom() bool {
 	return true
 }
 
-func (sexpr Number) isList() bool {
+func (sexpr Number) IsLIst() bool {
 	return false
 }
 
-func (sexpr Symbol) isNil() bool {
+func (sexpr Symbol) IsNil() bool {
 	return false
 }
 
-func (sexpr Symbol) isAtom() bool {
+func (sexpr Symbol) IsAtom() bool {
 	return true
 }
 
-func (sexpr Symbol) isList() bool {
+func (sexpr Symbol) IsLIst() bool {
 	return false
 }
 
-func (sexpr *Nil) isNil() bool {
+func (sexpr *Nil) IsNil() bool {
 	return false
 }
 
-func (sexpr *Nil) isAtom() bool {
+func (sexpr *Nil) IsAtom() bool {
 	return true
 }
 
-func (sexpr *Nil) isList() bool {
+func (sexpr *Nil) IsList() bool {
 	return true
 }
