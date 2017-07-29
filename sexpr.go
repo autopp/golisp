@@ -22,7 +22,7 @@ func (sexpr Bool) IsAtom() bool {
 	return true
 }
 
-func (sexpr Bool) IsLIst() bool {
+func (sexpr Bool) IsList() bool {
 	return false
 }
 
