@@ -1,4 +1,4 @@
-package golisp
+package sexpr
 
 import (
   "testing"
