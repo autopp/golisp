@@ -51,7 +51,7 @@ func (sexpr Symbol) IsList() bool {
 }
 
 func (sexpr *Nil) IsNil() bool {
-	return false
+	return true
 }
 
 func (sexpr *Nil) IsAtom() bool {

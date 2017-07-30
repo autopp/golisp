@@ -66,3 +66,24 @@ func TestSymbolIsList(t *testing.T) {
     t.Fatal("Symbol.IsList() should be false")
   }
 }
+
+func TestNilIsNil(t *testing.T) {
+  var s Nil
+  if !s.IsNil() {
+    t.Fatal("Nil.IsNil() should be true")
+  }
+}
+
+func TestNilIsAtom(t *testing.T) {
+  var s Nil
+  if !s.IsAtom() {
+    t.Fatal("Nil.IsAtom() should be true")
+  }
+}
+
+func TestNilIsList(t *testing.T) {
+  var s Nil
+  if !s.IsList() {
+    t.Fatal("Nil.IsList() should be true")
+  }
+}
