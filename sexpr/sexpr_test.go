@@ -68,22 +68,19 @@ func TestSymbolIsList(t *testing.T) {
 }
 
 func TestNilIsNil(t *testing.T) {
-  var s Nil
-  if !s.IsNil() {
+  if !GetNil().IsNil() {
     t.Fatal("Nil.IsNil() should be true")
   }
 }
 
 func TestNilIsAtom(t *testing.T) {
-  var s Nil
-  if !s.IsAtom() {
+  if !GetNil().IsAtom() {
     t.Fatal("Nil.IsAtom() should be true")
   }
 }
 
 func TestNilIsList(t *testing.T) {
-  var s Nil
-  if !s.IsList() {
+  if !GetNil().IsList() {
     t.Fatal("Nil.IsList() should be true")
   }
 }

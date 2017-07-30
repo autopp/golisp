@@ -3,13 +3,13 @@ package sexpr
 type SExpr interface {
 	IsNil() bool
 	IsAtom() bool
-	IsLIst() bool
+	IsList() bool
 }
 
 type Bool bool
 type Number int
 type Symbol string
-type Nil struct{}
+type nilImpl struct{}
 type Cons struct {
 	Car, Cdr SExpr
 }
@@ -50,14 +50,19 @@ func (sexpr Symbol) IsList() bool {
 	return false
 }
 
-func (sexpr *Nil) IsNil() bool {
+var nilV = &nilImpl{}
+func GetNil() SExpr {
+  return nilV
+}
+
+func (sexpr *nilImpl) IsNil() bool {
 	return true
 }
 
-func (sexpr *Nil) IsAtom() bool {
+func (sexpr *nilImpl) IsAtom() bool {
 	return true
 }
 
-func (sexpr *Nil) IsList() bool {
+func (sexpr *nilImpl) IsList() bool {
 	return true
 }
