@@ -34,7 +34,7 @@ func (sexpr Number) IsAtom() bool {
 	return true
 }
 
-func (sexpr Number) IsLIst() bool {
+func (sexpr Number) IsList() bool {
 	return false
 }
 
@@ -46,7 +46,7 @@ func (sexpr Symbol) IsAtom() bool {
 	return true
 }
 
-func (sexpr Symbol) IsLIst() bool {
+func (sexpr Symbol) IsList() bool {
 	return false
 }
 
