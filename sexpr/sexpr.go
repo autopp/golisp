@@ -51,8 +51,9 @@ func (sexpr Symbol) IsList() bool {
 }
 
 var nilV = &nilImpl{}
+
 func GetNil() SExpr {
-  return nilV
+	return nilV
 }
 
 func (sexpr *nilImpl) IsNil() bool {
