@@ -67,3 +67,7 @@ func (sexpr *nilImpl) IsAtom() bool {
 func (sexpr *nilImpl) IsList() bool {
 	return true
 }
+
+func NewCons(car, cdr SExpr) *Cons {
+  return &Cons{car, cdr}
+}

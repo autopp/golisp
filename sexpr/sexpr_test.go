@@ -84,3 +84,14 @@ func TestNilIsList(t *testing.T) {
 		t.Fatal("Nil.IsList() should be true")
 	}
 }
+
+func TestNewCons(t *testing.T) {
+  cons := NewCons(Bool(true), Bool(false))
+  if cons.Car != Bool(true) {
+    t.Fatal("NewCons() shoud set 1st argument to car")
+  }
+
+  if cons.Cdr != Bool(false) {
+    t.Fatal("NewCons() shoud set 2nd argument to cdr")
+  }
+}
