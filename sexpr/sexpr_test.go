@@ -95,3 +95,27 @@ func TestNewCons(t *testing.T) {
     t.Fatal("NewCons() shoud set 2nd argument to cdr")
   }
 }
+
+func TestConsIsNil(t *testing.T) {
+	if NewCons(Bool(true), Bool(false)).IsNil() {
+		t.Fatal("Cons.IsNil() should be false")
+	}
+}
+
+func TestConsIsAtom(t *testing.T) {
+	if NewCons(Bool(true), Bool(false)).IsAtom() {
+		t.Fatal("Cons.IsAtom() should be true")
+	}
+}
+
+func TestConsIsList(t *testing.T) {
+  cons := NewCons(Number(1), NewCons(Number(2), Number(3)))
+	if cons.IsList() {
+		t.Fatal("When last cdr is not nil, Cons.IsList() should be false")
+	}
+
+  cons = NewCons(Number(1), NewCons(Number(2), GetNil()))
+  if !cons.IsList() {
+		t.Fatal("When last cdr is nil, Cons.IsList() should be true")
+	}
+}

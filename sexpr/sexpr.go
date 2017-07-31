@@ -71,3 +71,15 @@ func (sexpr *nilImpl) IsList() bool {
 func NewCons(car, cdr SExpr) *Cons {
   return &Cons{car, cdr}
 }
+
+func (sexpr *Cons) IsNil() bool {
+	return false
+}
+
+func (sexpr *Cons) IsAtom() bool {
+	return false
+}
+
+func (sexpr *Cons) IsList() bool {
+	return sexpr.Cdr.IsList()
+}
