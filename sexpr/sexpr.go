@@ -4,6 +4,7 @@ type SExpr interface {
 	IsNil() bool
 	IsAtom() bool
 	IsList() bool
+  IsCons() bool
 }
 
 type Bool bool
@@ -29,6 +30,10 @@ func (sexpr Bool) IsList() bool {
 	return false
 }
 
+func (sexpr Bool) IsCons() bool {
+	return false
+}
+
 func (sexpr Number) IsNil() bool {
 	return false
 }
@@ -41,6 +46,10 @@ func (sexpr Number) IsList() bool {
 	return false
 }
 
+func (sexpr Number) IsCons() bool {
+	return false
+}
+
 func (sexpr Symbol) IsNil() bool {
 	return false
 }
@@ -50,6 +59,10 @@ func (sexpr Symbol) IsAtom() bool {
 }
 
 func (sexpr Symbol) IsList() bool {
+	return false
+}
+
+func (sexpr Symbol) IsCons() bool {
 	return false
 }
 
@@ -71,6 +84,10 @@ func (sexpr *nilImpl) IsList() bool {
 	return true
 }
 
+func (sexpr *nilImpl) IsCons() bool {
+	return false
+}
+
 func NewCons(car, cdr SExpr) *Cons {
   return &Cons{car, cdr}
 }
@@ -86,3 +103,8 @@ func (sexpr *Cons) IsAtom() bool {
 func (sexpr *Cons) IsList() bool {
 	return sexpr.Cdr.IsList()
 }
+
+func (sexpr *Cons) IsCons() bool {
+	return true
+}
+

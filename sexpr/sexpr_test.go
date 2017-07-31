@@ -22,6 +22,12 @@ func TestBoolIsList(t *testing.T) {
 	}
 }
 
+func TestBoolIsCons(t *testing.T) {
+	if False.IsCons() || True.IsCons() {
+		t.Fatal("Bool.IsCons() should be false")
+	}
+}
+
 func TestNumberIsNil(t *testing.T) {
 	var n Number
 	if n.IsNil() {
@@ -40,6 +46,13 @@ func TestNumberIsList(t *testing.T) {
 	var n Number
 	if n.IsList() {
 		t.Fatal("Number.IsList() should be false")
+	}
+}
+
+func TestNumberIsCons(t *testing.T) {
+	var n Number
+	if n.IsCons() {
+		t.Fatal("Number.IsCons() should be false")
 	}
 }
 
@@ -64,6 +77,13 @@ func TestSymbolIsList(t *testing.T) {
 	}
 }
 
+func TestSymbolIsCons(t *testing.T) {
+	var s Symbol
+	if s.IsCons() {
+		t.Fatal("Symbol.IsCons() should be false")
+	}
+}
+
 func TestNilIsNil(t *testing.T) {
 	if !GetNil().IsNil() {
 		t.Fatal("Nil.IsNil() should be true")
@@ -79,6 +99,12 @@ func TestNilIsAtom(t *testing.T) {
 func TestNilIsList(t *testing.T) {
 	if !GetNil().IsList() {
 		t.Fatal("Nil.IsList() should be true")
+	}
+}
+
+func TestNilIsCons(t *testing.T) {
+	if GetNil().IsCons() {
+		t.Fatal("Nil.IsCons() should be false")
 	}
 }
 
@@ -114,5 +140,11 @@ func TestConsIsList(t *testing.T) {
   cons = NewCons(Number(1), NewCons(Number(2), GetNil()))
   if !cons.IsList() {
 		t.Fatal("When last cdr is nil, Cons.IsList() should be true")
+	}
+}
+
+func TestConsIsCons(t *testing.T) {
+	if !NewCons(True, False).IsCons() {
+		t.Fatal("Cons.IsCons() should be true")
 	}
 }
