@@ -14,6 +14,9 @@ type Cons struct {
 	Car, Cdr SExpr
 }
 
+const False = Bool(false)
+const True = Bool(true)
+
 func (sexpr Bool) IsNil() bool {
 	return false
 }

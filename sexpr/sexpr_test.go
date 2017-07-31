@@ -5,22 +5,19 @@ import (
 )
 
 func TestBoolIsNil(t *testing.T) {
-	var b Bool
-	if b.IsNil() {
+	if False.IsNil() || True.IsNil() {
 		t.Fatal("Bool.IsNil() should be false")
 	}
 }
 
 func TestBoolIsAtom(t *testing.T) {
-	var b Bool
-	if !b.IsAtom() {
+	if !False.IsAtom() || !True.IsAtom() {
 		t.Fatal("Bool.IsAtom() should be true")
 	}
 }
 
 func TestBoolIsList(t *testing.T) {
-	var b Bool
-	if b.IsList() {
+	if False.IsList() || True.IsList() {
 		t.Fatal("Bool.IsList() should be false")
 	}
 }
@@ -86,24 +83,24 @@ func TestNilIsList(t *testing.T) {
 }
 
 func TestNewCons(t *testing.T) {
-  cons := NewCons(Bool(true), Bool(false))
-  if cons.Car != Bool(true) {
+  cons := NewCons(True, False)
+  if cons.Car != True {
     t.Fatal("NewCons() shoud set 1st argument to car")
   }
 
-  if cons.Cdr != Bool(false) {
+  if cons.Cdr != False {
     t.Fatal("NewCons() shoud set 2nd argument to cdr")
   }
 }
 
 func TestConsIsNil(t *testing.T) {
-	if NewCons(Bool(true), Bool(false)).IsNil() {
+	if NewCons(True, False).IsNil() {
 		t.Fatal("Cons.IsNil() should be false")
 	}
 }
 
 func TestConsIsAtom(t *testing.T) {
-	if NewCons(Bool(true), Bool(false)).IsAtom() {
+	if NewCons(True, False).IsAtom() {
 		t.Fatal("Cons.IsAtom() should be true")
 	}
 }
