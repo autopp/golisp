@@ -1,4 +1,4 @@
-package sexpr
+package golisp
 
 type SExpr interface {
 	IsNil() bool
