@@ -2,6 +2,8 @@ package golisp
 
 import (
   "fmt"
+  "strings"
+  "bufio"
   "errors"
 )
 
@@ -16,7 +18,7 @@ func formatError(filename string, line, col int, message string) error {
 }
 
 func Parse(source, filename string) (SExpr, error) {
-  tokens, err := tokenize(source, filename)
+  tokens, err := tokenize(bufio.NewReader(strings.NewReader(source)), filename)
   if err != nil {
     return GetNil(), err
   }
@@ -24,7 +26,7 @@ func Parse(source, filename string) (SExpr, error) {
   return sexpr, err
 }
 
-func tokenize(source, filename string) ([]token, error) {
+func tokenize(source *bufio.Reader, filename string) ([]token, error) {
   return nil, errors.New("not implemented")
 }
 
