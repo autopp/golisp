@@ -4,6 +4,7 @@ import (
   "fmt"
   "strings"
   "bufio"
+  "regexp"
   "errors"
 )
 
@@ -11,6 +12,11 @@ type token struct {
   kind int
   line, col int
   source string
+}
+
+type tokenizeRule struct {
+  pattern *regexp.Regexp
+  action func (string) *token
 }
 
 func formatError(filename string, line, col int, message string) error {
