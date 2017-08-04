@@ -35,6 +35,14 @@ type tokenizeRule struct {
 
 var tokenizeRules = []tokenizeRule{
   tokenizeRule{ regexp.MustCompile(`[ \t\n]`), emptyToken },
+  tokenizeRule{ regexp.MustCompile(`#f`), falseToken },
+  tokenizeRule{ regexp.MustCompile(`#t`), trueToken },
+  tokenizeRule{ regexp.MustCompile(`[-+]?(0|[1-9][0-9]*)`), numberToken },
+  tokenizeRule{ regexp.MustCompile(`[-+*/!?_a-zA-Z][-+*/!?_a-zA-Z0-9]*`), symbolToken },
+  tokenizeRule{ regexp.MustCompile(`\(`), lparenToken },
+  tokenizeRule{ regexp.MustCompile(`\)`), rparenToken },
+  tokenizeRule{ regexp.MustCompile(`\.`), dotToken },
+  tokenizeRule{ regexp.MustCompile(`'`), quoteToken },
 }
 
 func formatError(filename string, line, col int, message string) error {
