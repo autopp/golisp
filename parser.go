@@ -19,6 +19,10 @@ type tokenizeRule struct {
   action func (string) *token
 }
 
+var tokenizeRules = []tokenizeRule{
+  tokenizeRule{ regexp.MustCompile(`[ \t\n]`), func (_ string) *token { return nil } },
+}
+
 func formatError(filename string, line, col int, message string) error {
   return errors.New(fmt.Sprintf("%s:%d:%d:%s", filename, line, col, message))
 }
