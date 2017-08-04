@@ -12,6 +12,14 @@ type tokenKind int
 
 const (
   emptyToken tokenKind = iota
+  falseToken
+  trueToken
+  numberToken
+  symbolToken
+  lparenToken
+  rparenToken
+  dotToken
+  quoteToken
 )
 
 type token struct {
