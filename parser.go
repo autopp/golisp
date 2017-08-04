@@ -22,13 +22,11 @@ type token struct {
 
 type tokenizeRule struct {
   pattern *regexp.Regexp
-  action func (string) tokenKind
+  kind tokenKind
 }
 
 var tokenizeRules = []tokenizeRule{
-  tokenizeRule{
-    regexp.MustCompile(`[ \t\n]`),
-    func (_ string) (tokenKind) { return emptyToken } },
+  tokenizeRule{ regexp.MustCompile(`[ \t\n]`), emptyToken },
 }
 
 func formatError(filename string, line, col int, message string) error {
