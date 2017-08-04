@@ -8,19 +8,27 @@ import (
   "errors"
 )
 
+type tokenKind int
+
+const (
+  emptyToken tokenKind = iota
+)
+
 type token struct {
-  kind int
+  kind tokenKind
   line, col int
   source string
 }
 
 type tokenizeRule struct {
   pattern *regexp.Regexp
-  action func (string) *token
+  action func (string) tokenKind
 }
 
 var tokenizeRules = []tokenizeRule{
-  tokenizeRule{ regexp.MustCompile(`[ \t\n]`), func (_ string) *token { return nil } },
+  tokenizeRule{
+    regexp.MustCompile(`[ \t\n]`),
+    func (_ string) (tokenKind) { return emptyToken } },
 }
 
 func formatError(filename string, line, col int, message string) error {
