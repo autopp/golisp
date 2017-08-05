@@ -47,6 +47,10 @@ var tokenizeRules = []tokenizeRule{
 	tokenizeRule{regexp.MustCompile(`^'`), quoteToken},
 }
 
+func (tk *token) String() string {
+	return tk.source
+}
+
 func formatError(filename string, line, col int, message string) error {
 	return errors.New(fmt.Sprintf("%s:%d:%d:%s", filename, line, col, message))
 }
