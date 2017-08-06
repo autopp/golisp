@@ -7,6 +7,7 @@ import (
 	"io"
 	"regexp"
 	"strings"
+  "strconv"
 )
 
 type tokenKind int
@@ -94,5 +95,17 @@ func tokenize(source io.Reader, filename string) ([]*token, error) {
 }
 
 func parseSExpr(tokens []*token, filename string) (SExpr, error) {
-	return GetNil(), errors.New("not implemented")
+	switch tokens[0].kind {
+  case falseToken:
+    return False, nil
+	case trueToken:
+	  return True, nil
+  case numberToken:
+    numberValue, _ := strconv.Atoi(tokens[0].source)
+    return Number(numberValue), nil
+  case symbolToken:
+    return Symbol(tokens[0].source), nil
+  default:
+    return GetNil(), formatError(filename, tokens[0].line, tokens[0].col, "not implemented")
+	}
 }
