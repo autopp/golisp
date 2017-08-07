@@ -52,8 +52,10 @@ func (tk *token) String() string {
 	return tk.source
 }
 
-func formatError(filename string, line, col int, message string) error {
-	return errors.New(fmt.Sprintf("%s:%d:%d:%s", filename, line, col, message))
+func formatError(filename string, line, col int, format string, args... interface{}) error {
+	header := fmt.Sprintf("%s:%d:%d: ", filename, line, col)
+	message := fmt.Sprintf(format, args...)
+	return errors.New(header + message)
 }
 
 func Parse(source, filename string) (SExpr, error) {
