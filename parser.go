@@ -52,7 +52,7 @@ func (tk *token) String() string {
 	return tk.source
 }
 
-func formatError(filename string, line, col int, format string, args... interface{}) error {
+func formatError(filename string, line, col int, format string, args ...interface{}) error {
 	header := fmt.Sprintf("%s:%d:%d: ", filename, line, col)
 	message := fmt.Sprintf(format, args...)
 	return errors.New(header + message)
@@ -107,7 +107,18 @@ func parseSExpr(tokens []*token, filename string) (SExpr, []*token, error) {
 		return Number(numberValue), tokens[1:], nil
 	case symbolToken:
 		return Symbol(tokens[0].source), tokens[1:], nil
+	case lparenToken:
+		return parseCons(tokens[1:], filename)
 	default:
-		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "not implemented")
+		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "expected sexpr, but got `%s'", tokens[0])
+	}
+}
+
+func parseCons(tokens []*token, filename string) (SExpr, []*token, error) {
+	switch tokens[0].kind {
+	case rparenToken:
+		return GetNil(), tokens[1:], nil
+	default:
+		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "parsing cons is not implemented (got `%s')", tokens[0])
 	}
 }
