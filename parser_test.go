@@ -87,3 +87,11 @@ func TestParseWithNil(t *testing.T) {
 		t.Fatal("Parse with () shoud return nil value")
 	}
 }
+
+func TestParseWithExtraTokens(t *testing.T) {
+	_, err := Parse("() foo", "extra.lsp")
+
+	if err == nil {
+		t.Fatal("Parse with () foo shoud return error about extra token")
+	}
+}

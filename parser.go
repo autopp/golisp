@@ -63,7 +63,14 @@ func Parse(source, filename string) (SExpr, error) {
 	if err != nil {
 		return GetNil(), err
 	}
-	sexpr, _, err := parseSExpr(tokens, filename)
+	sexpr, rest, err := parseSExpr(tokens, filename)
+	if err != nil {
+		return GetNil(), err
+	}
+	if len(rest) > 0 {
+		return GetNil(), formatError(filename, rest[0].line, rest[0].col, "expected EOS, but got `%s'", rest[0])
+	}
+
 	return sexpr, err
 }
 
