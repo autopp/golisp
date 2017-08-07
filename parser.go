@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"strconv"
 	"strings"
-  "strconv"
 )
 
 type tokenKind int
@@ -61,7 +61,7 @@ func Parse(source, filename string) (SExpr, error) {
 	if err != nil {
 		return GetNil(), err
 	}
-	sexpr, err := parseSExpr(tokens, filename)
+	sexpr, _, err := parseSExpr(tokens, filename)
 	return sexpr, err
 }
 
@@ -94,18 +94,18 @@ func tokenize(source io.Reader, filename string) ([]*token, error) {
 	return tokens, nil
 }
 
-func parseSExpr(tokens []*token, filename string) (SExpr, error) {
+func parseSExpr(tokens []*token, filename string) (SExpr, []*token, error) {
 	switch tokens[0].kind {
-  case falseToken:
-    return False, nil
+	case falseToken:
+		return False, tokens[1:], nil
 	case trueToken:
-	  return True, nil
-  case numberToken:
-    numberValue, _ := strconv.Atoi(tokens[0].source)
-    return Number(numberValue), nil
-  case symbolToken:
-    return Symbol(tokens[0].source), nil
-  default:
-    return GetNil(), formatError(filename, tokens[0].line, tokens[0].col, "not implemented")
+		return True, tokens[1:], nil
+	case numberToken:
+		numberValue, _ := strconv.Atoi(tokens[0].source)
+		return Number(numberValue), tokens[1:], nil
+	case symbolToken:
+		return Symbol(tokens[0].source), tokens[1:], nil
+	default:
+		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "not implemented")
 	}
 }
