@@ -95,3 +95,20 @@ func TestParseWithExtraTokens(t *testing.T) {
 		t.Fatal("Parse with () foo shoud return error about extra token")
 	}
 }
+
+func TestParseWithConsPaire(t *testing.T) {
+	res, err := Parse("(#t . #f)", "pair.lsp")
+
+	if err != nil {
+		t.Fatal("Parse with (#t . #f) shoud not return error, but got:", err.Error())
+	}
+
+  if !res.IsCons() {
+    t.Fatal("Parse with (#t . #f) shoud return cons pair, but got:", res)
+  }
+
+  cons := res.(*Cons)
+  if !(cons.Car == True && cons.Cdr == False) {
+    t.Fatal("Parse with (#t . #f) shoud return pair of boolean")
+  }
+}

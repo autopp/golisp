@@ -126,6 +126,30 @@ func parseCons(tokens []*token, filename string) (SExpr, []*token, error) {
 	case rparenToken:
 		return GetNil(), tokens[1:], nil
 	default:
-		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "parsing cons is not implemented (got `%s')", tokens[0])
+		car, rest, err := parseSExpr(tokens, filename)
+		if err != nil {
+			return GetNil(), rest, err
+		}
+		cdr, rest, err := parseConsRest(rest, filename)
+		if err != nil {
+			return GetNil(), rest, err
+		}
+		return NewCons(car, cdr), rest, nil
+	}
+}
+
+func parseConsRest(tokens []*token, filename string) (SExpr, []*token, error) {
+	switch tokens[0].kind {
+	case dotToken:
+		cdr, rest, err := parseSExpr(tokens[1:], filename)
+		if err != nil {
+			return GetNil(), rest, err
+		}
+		if rest[0].kind != rparenToken {
+			return GetNil(), rest, formatError(filename, rest[0].line, rest[0].col, "expected `)', but got `%s'", rest[0])
+		}
+		return cdr, rest[1:], nil
+	default:
+		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "list literal is not implemented")
 	}
 }
