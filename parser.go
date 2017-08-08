@@ -27,6 +27,7 @@ const (
 
 type token struct {
 	kind      tokenKind
+	filename string
 	line, col int
 	source    string
 }
@@ -58,12 +59,16 @@ func formatError(filename string, line, col int, format string, args ...interfac
 	return errors.New(header + message)
 }
 
+func formatErrorWithToken(token *token, format string, args... interface{}) error {
+	return formatError(token.filename, token.line, token.col, format, args...)
+}
+
 func Parse(source, filename string) (SExpr, error) {
 	tokens, err := tokenize(strings.NewReader(source), filename)
 	if err != nil {
 		return GetNil(), err
 	}
-	sexpr, rest, err := parseSExpr(tokens, filename)
+	sexpr, rest, err := parseSExpr(tokens)
 	if err != nil {
 		return GetNil(), err
 	}
@@ -87,7 +92,7 @@ func tokenize(source io.Reader, filename string) ([]*token, error) {
 				if matched := rule.pattern.FindStringIndex(text); matched != nil {
 					tokenKind = rule.kind
 					if tokenKind != emptyToken {
-						tokens = append(tokens, &token{tokenKind, line, col, text[0:matched[1]]})
+						tokens = append(tokens, &token{tokenKind, filename, line, col, text[0:matched[1]]})
 					}
 					col += matched[1]
 					text = text[matched[1]:]
@@ -103,7 +108,7 @@ func tokenize(source io.Reader, filename string) ([]*token, error) {
 	return tokens, nil
 }
 
-func parseSExpr(tokens []*token, filename string) (SExpr, []*token, error) {
+func parseSExpr(tokens []*token) (SExpr, []*token, error) {
 	switch tokens[0].kind {
 	case falseToken:
 		return False, tokens[1:], nil
@@ -115,22 +120,22 @@ func parseSExpr(tokens []*token, filename string) (SExpr, []*token, error) {
 	case symbolToken:
 		return Symbol(tokens[0].source), tokens[1:], nil
 	case lparenToken:
-		return parseCons(tokens[1:], filename)
+		return parseCons(tokens[1:])
 	default:
-		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "expected sexpr, but got `%s'", tokens[0])
+		return GetNil(), tokens, formatErrorWithToken(tokens[0], "expected sexpr, but got `%s'", tokens[0])
 	}
 }
 
-func parseCons(tokens []*token, filename string) (SExpr, []*token, error) {
+func parseCons(tokens []*token) (SExpr, []*token, error) {
 	switch tokens[0].kind {
 	case rparenToken:
 		return GetNil(), tokens[1:], nil
 	default:
-		car, rest, err := parseSExpr(tokens, filename)
+		car, rest, err := parseSExpr(tokens)
 		if err != nil {
 			return GetNil(), rest, err
 		}
-		cdr, rest, err := parseConsRest(rest, filename)
+		cdr, rest, err := parseConsRest(rest)
 		if err != nil {
 			return GetNil(), rest, err
 		}
@@ -138,18 +143,18 @@ func parseCons(tokens []*token, filename string) (SExpr, []*token, error) {
 	}
 }
 
-func parseConsRest(tokens []*token, filename string) (SExpr, []*token, error) {
+func parseConsRest(tokens []*token) (SExpr, []*token, error) {
 	switch tokens[0].kind {
 	case dotToken:
-		cdr, rest, err := parseSExpr(tokens[1:], filename)
+		cdr, rest, err := parseSExpr(tokens[1:])
 		if err != nil {
 			return GetNil(), rest, err
 		}
 		if rest[0].kind != rparenToken {
-			return GetNil(), rest, formatError(filename, rest[0].line, rest[0].col, "expected `)', but got `%s'", rest[0])
+			return GetNil(), rest, formatErrorWithToken(rest[0], "expected `)', but got `%s'", rest[0])
 		}
 		return cdr, rest[1:], nil
 	default:
-		return GetNil(), tokens, formatError(filename, tokens[0].line, tokens[0].col, "list literal is not implemented")
+		return GetNil(), tokens, formatErrorWithToken(tokens[0], "list literal is not implemented")
 	}
 }
