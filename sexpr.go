@@ -5,6 +5,7 @@ type SExpr interface {
 	IsAtom() bool
 	IsList() bool
   IsCons() bool
+  Eq(SExpr) bool
 }
 
 type Bool bool
@@ -32,6 +33,15 @@ func (sexpr Bool) IsList() bool {
 
 func (sexpr Bool) IsCons() bool {
 	return false
+}
+
+func (sexpr Bool) Eq(other SExpr) bool {
+  switch other.(type) {
+  case Bool:
+    return sexpr == other
+  default:
+    return false
+  }
 }
 
 func (sexpr Number) IsNil() bool {

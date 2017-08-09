@@ -28,6 +28,24 @@ func TestBoolIsCons(t *testing.T) {
 	}
 }
 
+func TestBoolEqWithBool(t *testing.T) {
+  if !True.Eq(True) {
+    t.Fatal("Bool.Eq() with same should be true")
+  }
+
+  if !False.Eq(False) {
+    t.Fatal("Bool.Eq() with same should be true")
+  }
+
+  if True.Eq(False) {
+    t.Fatal("Bool.Eq() with different should be false")
+  }
+
+  if False.Eq(True) {
+    t.Fatal("Bool.Eq() with different should be false")
+  }
+}
+
 func TestNumberIsNil(t *testing.T) {
 	var n Number
 	if n.IsNil() {
