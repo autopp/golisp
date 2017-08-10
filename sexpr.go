@@ -60,6 +60,15 @@ func (sexpr Number) IsCons() bool {
 	return false
 }
 
+func (sexpr Number) Eq(other SExpr) bool {
+  switch other.(type) {
+  case Number:
+    return sexpr == other
+  default:
+    return false
+  }
+}
+
 func (sexpr Symbol) IsNil() bool {
 	return false
 }
