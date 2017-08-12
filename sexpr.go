@@ -116,6 +116,11 @@ func (sexpr *nilImpl) IsCons() bool {
 	return false
 }
 
+func (sexpr *nilImpl) Eq(other SExpr) bool {
+  _, isNil := other.(*nilImpl)
+  return isNil
+}
+
 func NewCons(car, cdr SExpr) *Cons {
   return &Cons{car, cdr}
 }
