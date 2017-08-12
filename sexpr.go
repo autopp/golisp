@@ -141,3 +141,11 @@ func (sexpr *Cons) IsCons() bool {
 	return true
 }
 
+func (sexpr *Cons) Eq(other SExpr) bool {
+  cons, ok := other.(*Cons)
+  if !ok {
+    return false
+  }
+
+  return sexpr.Car.Eq(cons.Car) && sexpr.Cdr.Eq(cons.Cdr)
+}
