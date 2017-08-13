@@ -26,3 +26,7 @@ func (sexpr Symbol) Eq(other SExpr) bool {
 		return false
 	}
 }
+
+func (sexpr Symbol) String() string {
+	return string(sexpr)
+}

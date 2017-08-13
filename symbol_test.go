@@ -31,3 +31,13 @@ func TestSymbolIsCons(t *testing.T) {
 		t.Fatal("Symbol.IsCons() should be false")
 	}
 }
+
+func TestSymbolString(t *testing.T) {
+	in := Symbol("foo")
+	out := "foo"
+	a := in.String()
+
+	if a != out {
+		t.Errorf("%s.String() == %q, want %q", "foo", a, out)
+	}
+}
