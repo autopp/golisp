@@ -29,3 +29,11 @@ func (sexpr Bool) Eq(other SExpr) bool {
 		return false
 	}
 }
+
+func (sexpr Bool) String() string {
+	if sexpr {
+		return "#t"
+	} else {
+		return "#f"
+	}
+}

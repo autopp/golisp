@@ -85,3 +85,20 @@ func TestBoolEqWithBool(t *testing.T) {
 		t.Fatal("Bool.Eq() with different should be false")
 	}
 }
+
+func TestBoolString(t *testing.T) {
+	cases := []struct {
+		in  Bool
+		out string
+	}{
+		{False, "#f"},
+		{True, "#t"},
+	}
+
+	for _, tt := range cases {
+		a := tt.in.String()
+		if a != tt.out {
+			t.Errorf("%v.String() == %q, want %q", tt.in, a, tt.out)
+		}
+	}
+}
