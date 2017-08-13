@@ -27,7 +27,7 @@ const (
 
 type token struct {
 	kind      tokenKind
-	filename string
+	filename  string
 	line, col int
 	source    string
 }
@@ -59,7 +59,7 @@ func formatError(filename string, line, col int, format string, args ...interfac
 	return errors.New(header + message)
 }
 
-func formatErrorWithToken(token *token, format string, args... interface{}) error {
+func formatErrorWithToken(token *token, format string, args ...interface{}) error {
 	return formatError(token.filename, token.line, token.col, format, args...)
 }
 

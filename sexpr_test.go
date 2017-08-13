@@ -29,21 +29,21 @@ func TestBoolIsCons(t *testing.T) {
 }
 
 func TestBoolEqWithBool(t *testing.T) {
-  if !True.Eq(True) {
-    t.Fatal("Bool.Eq() with same should be true")
-  }
+	if !True.Eq(True) {
+		t.Fatal("Bool.Eq() with same should be true")
+	}
 
-  if !False.Eq(False) {
-    t.Fatal("Bool.Eq() with same should be true")
-  }
+	if !False.Eq(False) {
+		t.Fatal("Bool.Eq() with same should be true")
+	}
 
-  if True.Eq(False) {
-    t.Fatal("Bool.Eq() with different should be false")
-  }
+	if True.Eq(False) {
+		t.Fatal("Bool.Eq() with different should be false")
+	}
 
-  if False.Eq(True) {
-    t.Fatal("Bool.Eq() with different should be false")
-  }
+	if False.Eq(True) {
+		t.Fatal("Bool.Eq() with different should be false")
+	}
 }
 
 func TestNumberIsNil(t *testing.T) {
@@ -127,14 +127,14 @@ func TestNilIsCons(t *testing.T) {
 }
 
 func TestNewCons(t *testing.T) {
-  cons := NewCons(True, False)
-  if cons.Car != True {
-    t.Fatal("NewCons() shoud set 1st argument to car")
-  }
+	cons := NewCons(True, False)
+	if cons.Car != True {
+		t.Fatal("NewCons() shoud set 1st argument to car")
+	}
 
-  if cons.Cdr != False {
-    t.Fatal("NewCons() shoud set 2nd argument to cdr")
-  }
+	if cons.Cdr != False {
+		t.Fatal("NewCons() shoud set 2nd argument to cdr")
+	}
 }
 
 func TestConsIsNil(t *testing.T) {
@@ -150,13 +150,13 @@ func TestConsIsAtom(t *testing.T) {
 }
 
 func TestConsIsList(t *testing.T) {
-  cons := NewCons(Number(1), NewCons(Number(2), Number(3)))
+	cons := NewCons(Number(1), NewCons(Number(2), Number(3)))
 	if cons.IsList() {
 		t.Fatal("When last cdr is not nil, Cons.IsList() should be false")
 	}
 
-  cons = NewCons(Number(1), NewCons(Number(2), GetNil()))
-  if !cons.IsList() {
+	cons = NewCons(Number(1), NewCons(Number(2), GetNil()))
+	if !cons.IsList() {
 		t.Fatal("When last cdr is nil, Cons.IsList() should be true")
 	}
 }
