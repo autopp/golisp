@@ -27,3 +27,13 @@ func TestNilIsCons(t *testing.T) {
 		t.Fatal("Nil.IsCons() should be false")
 	}
 }
+
+func TestNilString(t *testing.T) {
+	in := GetNil().(*nilImpl)
+	out := "()"
+	a := in.String()
+
+	if in.String() != out {
+		t.Errorf("GetNil().String() == %q, want %q", a, out)
+	}
+}

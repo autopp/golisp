@@ -28,3 +28,7 @@ func (sexpr *nilImpl) Eq(other SExpr) bool {
 	_, isNil := other.(*nilImpl)
 	return isNil
 }
+
+func (sexpr *nilImpl) String() string {
+	return "()"
+}
