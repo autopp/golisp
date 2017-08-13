@@ -5,26 +5,66 @@ import (
 )
 
 func TestBoolIsNil(t *testing.T) {
-	if False.IsNil() || True.IsNil() {
-		t.Fatal("Bool.IsNil() should be false")
+	cases := []struct {
+		in  SExpr
+		out bool
+	}{
+		{False, false},
+		{True, false},
+	}
+
+	for _, tt := range cases {
+		if tt.in.IsNil() != tt.out {
+			t.Errorf("%s.IsNil() shoud be %v", tt.in, tt.out)
+		}
 	}
 }
 
 func TestBoolIsAtom(t *testing.T) {
-	if !False.IsAtom() || !True.IsAtom() {
-		t.Fatal("Bool.IsAtom() should be true")
+	cases := []struct {
+		in  SExpr
+		out bool
+	}{
+		{False, true},
+		{True, true},
+	}
+
+	for _, tt := range cases {
+		if tt.in.IsAtom() != tt.out {
+			t.Errorf("%s.IsAtom() shoud be %v", tt.in, tt.out)
+		}
 	}
 }
 
 func TestBoolIsList(t *testing.T) {
-	if False.IsList() || True.IsList() {
-		t.Fatal("Bool.IsList() should be false")
+	cases := []struct {
+		in  SExpr
+		out bool
+	}{
+		{False, false},
+		{True, false},
+	}
+
+	for _, tt := range cases {
+		if tt.in.IsList() != tt.out {
+			t.Errorf("%s.IsList() shoud be %v", tt.in, tt.out)
+		}
 	}
 }
 
 func TestBoolIsCons(t *testing.T) {
-	if False.IsCons() || True.IsCons() {
-		t.Fatal("Bool.IsCons() should be false")
+	cases := []struct {
+		in  SExpr
+		out bool
+	}{
+		{False, false},
+		{True, false},
+	}
+
+	for _, tt := range cases {
+		if tt.in.IsCons() != tt.out {
+			t.Errorf("%s.IsCons() shoud be %v", tt.in, tt.out)
+		}
 	}
 }
 
