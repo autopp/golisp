@@ -1,5 +1,7 @@
 package golisp
 
+import "fmt"
+
 type Number int
 
 func (sexpr Number) IsNil() bool {
@@ -25,4 +27,8 @@ func (sexpr Number) Eq(other SExpr) bool {
 	default:
 		return false
 	}
+}
+
+func (sexpr Number) String() string {
+	return fmt.Sprintf("%d", sexpr)
 }

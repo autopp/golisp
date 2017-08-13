@@ -31,3 +31,13 @@ func TestNumberIsCons(t *testing.T) {
 		t.Fatal("Number.IsCons() should be false")
 	}
 }
+
+func TestNumberString(t *testing.T) {
+	in := Number(42)
+	out := "42"
+	a := in.String()
+
+	if a != out {
+		t.Errorf("%v.String() == %q, want %q", in, a, out)
+	}
+}
