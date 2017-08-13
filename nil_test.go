@@ -29,7 +29,7 @@ func TestNilIsCons(t *testing.T) {
 }
 
 func TestNilString(t *testing.T) {
-	in := GetNil().(*nilImpl)
+	in := GetNil()
 	out := "()"
 	a := in.String()
 

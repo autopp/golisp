@@ -1,34 +1,34 @@
 package golisp
 
-type nilImpl struct{}
+type Nil struct{}
 
-var nilV = &nilImpl{}
+var nilV = &Nil{}
 
-func GetNil() SExpr {
+func GetNil() *Nil {
 	return nilV
 }
 
-func (sexpr *nilImpl) IsNil() bool {
+func (sexpr *Nil) IsNil() bool {
 	return true
 }
 
-func (sexpr *nilImpl) IsAtom() bool {
+func (sexpr *Nil) IsAtom() bool {
 	return true
 }
 
-func (sexpr *nilImpl) IsList() bool {
+func (sexpr *Nil) IsList() bool {
 	return true
 }
 
-func (sexpr *nilImpl) IsCons() bool {
+func (sexpr *Nil) IsCons() bool {
 	return false
 }
 
-func (sexpr *nilImpl) Eq(other SExpr) bool {
-	_, isNil := other.(*nilImpl)
+func (sexpr *Nil) Eq(other SExpr) bool {
+	_, isNil := other.(*Nil)
 	return isNil
 }
 
-func (sexpr *nilImpl) String() string {
+func (sexpr *Nil) String() string {
 	return "()"
 }
