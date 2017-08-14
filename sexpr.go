@@ -6,4 +6,5 @@ type SExpr interface {
 	IsList() bool
 	IsCons() bool
 	Eq(SExpr) bool
+	String() string
 }
