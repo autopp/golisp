@@ -31,7 +31,7 @@ func TestParse(t *testing.T) {
 		} else {
 			if err != nil {
 				t.Errorf("Parse(%q, %q) == (%s, %s), want (%s, nil)", tt.source, filename, got, err, tt.out)
-			} else if got != tt.out {
+			} else if !Eq(got, tt.out) {
 				t.Errorf("Parse(%q, %q) == (%s, nil), want (%s, nil)", tt.source, filename, got, tt.out)
 			}
 		}
