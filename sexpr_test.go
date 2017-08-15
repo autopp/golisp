@@ -49,6 +49,12 @@ func TestEqWithSameTypes(t *testing.T) {
 		{Symbol("foo"), Symbol("bar"), false},
 		{Symbol("foo"), Symbol("foo"), true},
 		{GetNil(), GetNil(), true},
+		{NewCons(False, True), NewCons(True, True), false},
+		{NewCons(False, True), NewCons(False, False), false},
+		{NewCons(False, True), NewCons(False, True), true},
+		{NewCons(NewCons(False, True), NewCons(True, False)), NewCons(NewCons(False, False), NewCons(True, False)), false},
+		{NewCons(NewCons(False, True), NewCons(True, False)), NewCons(NewCons(False, True), NewCons(True, True)), false},
+		{NewCons(NewCons(False, True), NewCons(True, False)), NewCons(NewCons(False, True), NewCons(True, False)), true},
 	}
 
 	for _, tt := range cases {

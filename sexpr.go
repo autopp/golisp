@@ -18,12 +18,17 @@ func Eq(x, y SExpr) bool {
 		return false
 	}
 
-	switch x.(type) {
-	case Bool, Number, Symbol:
-		return x == y
-	case *Nil:
+	if x == y {
 		return true
 	}
 
-	return true
+	switch z := x.(type) {
+	case *Nil:
+		return true
+	case *Cons:
+		w := y.(*Cons)
+		return Eq(z.Car, w.Car) && Eq(z.Cdr, w.Cdr)
+	}
+
+	return false
 }
