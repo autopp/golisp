@@ -28,15 +28,6 @@ func (sexpr *Cons) IsCons() bool {
 	return true
 }
 
-func (sexpr *Cons) Eq(other SExpr) bool {
-	cons, ok := other.(*Cons)
-	if !ok {
-		return false
-	}
-
-	return sexpr.Car.Eq(cons.Car) && sexpr.Cdr.Eq(cons.Cdr)
-}
-
 func (cons *Cons) String() string {
 	buf := bytes.NewBufferString("(")
 	buf.WriteString(cons.Car.String())

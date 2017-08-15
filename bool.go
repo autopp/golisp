@@ -21,14 +21,6 @@ func (sexpr Bool) IsCons() bool {
 	return false
 }
 
-func (sexpr Bool) Eq(other SExpr) bool {
-	switch other.(type) {
-	case Bool:
-		return sexpr == other
-	default:
-		return false
-	}
-}
 
 func (sexpr Bool) String() string {
 	if sexpr {

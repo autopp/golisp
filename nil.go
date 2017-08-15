@@ -24,11 +24,6 @@ func (sexpr *Nil) IsCons() bool {
 	return false
 }
 
-func (sexpr *Nil) Eq(other SExpr) bool {
-	_, isNil := other.(*Nil)
-	return isNil
-}
-
 func (sexpr *Nil) String() string {
 	return "()"
 }

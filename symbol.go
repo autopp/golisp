@@ -18,15 +18,6 @@ func (sexpr Symbol) IsCons() bool {
 	return false
 }
 
-func (sexpr Symbol) Eq(other SExpr) bool {
-	switch other.(type) {
-	case Symbol:
-		return sexpr == other
-	default:
-		return false
-	}
-}
-
 func (sexpr Symbol) String() string {
 	return string(sexpr)
 }

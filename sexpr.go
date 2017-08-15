@@ -9,7 +9,6 @@ type SExpr interface {
 	IsAtom() bool
 	IsList() bool
 	IsCons() bool
-	Eq(SExpr) bool
 	String() string
 }
 
