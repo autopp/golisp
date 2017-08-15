@@ -45,6 +45,13 @@ func TestConsIsCons(t *testing.T) {
 	}
 }
 
+func TestConsIsProc(t *testing.T) {
+	in := NewCons(True, False)
+	if in.IsProc() {
+		t.Errorf("%s.IsProc == true, want false", in)
+	}
+}
+
 func TestConsString(t *testing.T) {
 	cases := []struct {
 		in  *Cons

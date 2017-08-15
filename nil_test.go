@@ -28,6 +28,12 @@ func TestNilIsCons(t *testing.T) {
 	}
 }
 
+func TestNilIsProc(t *testing.T) {
+	if GetNil().IsProc() {
+		t.Fatal("Nil.IsProc() == true, want false")
+	}
+}
+
 func TestNilString(t *testing.T) {
 	in := GetNil()
 	out := "()"

@@ -21,6 +21,9 @@ func (sexpr Bool) IsCons() bool {
 	return false
 }
 
+func (sexpr Bool) IsProc() bool {
+	return false
+}
 
 func (sexpr Bool) String() string {
 	if sexpr {

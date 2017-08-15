@@ -24,6 +24,10 @@ func (sexpr *Nil) IsCons() bool {
 	return false
 }
 
+func (sexpr *Nil) IsProc() bool {
+	return false
+}
+
 func (sexpr *Nil) String() string {
 	return "()"
 }

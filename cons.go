@@ -28,6 +28,10 @@ func (sexpr *Cons) IsCons() bool {
 	return true
 }
 
+func (sexpr *Cons) IsProc() bool {
+	return false
+}
+
 func (cons *Cons) String() string {
 	buf := bytes.NewBufferString("(")
 	buf.WriteString(cons.Car.String())

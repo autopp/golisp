@@ -20,6 +20,10 @@ func (sexpr Number) IsCons() bool {
 	return false
 }
 
+func (sexpr Number) IsProc() bool {
+	return false
+}
+
 func (sexpr Number) String() string {
 	return fmt.Sprintf("%d", sexpr)
 }

@@ -68,6 +68,21 @@ func TestBoolIsCons(t *testing.T) {
 	}
 }
 
+func TestBoolIsProc(t *testing.T) {
+	cases := []struct {
+		in SExpr
+	}{
+		{False},
+		{True},
+	}
+
+	for _, tt := range cases {
+		if tt.in.IsProc() {
+			t.Errorf("%s.IsProc() == true, want false", tt.in)
+		}
+	}
+}
+
 func TestBoolString(t *testing.T) {
 	cases := []struct {
 		in  Bool

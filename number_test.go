@@ -32,6 +32,13 @@ func TestNumberIsCons(t *testing.T) {
 	}
 }
 
+func TestNumberIsProc(t *testing.T) {
+	var n Number
+	if n.IsProc() {
+		t.Fatal("Number.IsProc() == true, want false")
+	}
+}
+
 func TestNumberString(t *testing.T) {
 	in := Number(42)
 	out := "42"

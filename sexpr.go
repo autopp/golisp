@@ -9,6 +9,7 @@ type SExpr interface {
 	IsAtom() bool
 	IsList() bool
 	IsCons() bool
+	IsProc() bool
 	String() string
 }
 

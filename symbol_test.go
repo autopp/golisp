@@ -32,6 +32,13 @@ func TestSymbolIsCons(t *testing.T) {
 	}
 }
 
+func TestSymbolIsProc(t *testing.T) {
+	in := Symbol("foo")
+	if in.IsProc() {
+		t.Errorf("%s.IsProc == true, want false", in)
+	}
+}
+
 func TestSymbolString(t *testing.T) {
 	in := Symbol("foo")
 	out := "foo"
