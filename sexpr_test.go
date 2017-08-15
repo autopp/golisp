@@ -34,3 +34,27 @@ func TestEqWithDifferentTypes(t *testing.T) {
 		}
 	}
 }
+
+func TestEqWithSameTypes(t *testing.T) {
+	cases := []struct {
+		x, y SExpr
+		out  bool
+	}{
+		{False, False, true},
+		{False, True, false},
+		{True, False, false},
+		{True, True, true},
+		{Number(42), Number(666), false},
+		{Number(42), Number(42), true},
+		{Symbol("foo"), Symbol("bar"), false},
+		{Symbol("foo"), Symbol("foo"), true},
+		{GetNil(), GetNil(), true},
+	}
+
+	for _, tt := range cases {
+		got := Eq(tt.x, tt.y)
+		if got != tt.out {
+			t.Errorf("Eq(%s, %s) == %v, want %v", tt.x, tt.y, got, tt.out)
+		}
+	}
+}
