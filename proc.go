@@ -6,3 +6,21 @@ type Proc interface {
 	Required() int
 	Optional() int
 }
+
+type procBase struct {
+	name     string
+	required int
+	optional int
+}
+
+func (b *procBase) Name() string {
+	return b.name
+}
+
+func (b *procBase) Required() int {
+	return b.required
+}
+
+func (b *procBase) Optional() int {
+	return b.optional
+}
