@@ -13,6 +13,22 @@ type procBase struct {
 	optional int
 }
 
+type SpForm struct {
+	*procBase
+}
+
+type Func struct {
+	*procBase
+}
+
+type BuiltinFunc struct {
+	*Func
+}
+
+type UserFunc struct {
+	*Func
+}
+
 func (b *procBase) Name() string {
 	return b.name
 }
