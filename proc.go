@@ -15,6 +15,7 @@ type procBase struct {
 
 type SpForm struct {
 	*procBase
+	Body func([]SExpr, *Env) (SExpr, error)
 }
 
 type Func struct {
@@ -23,10 +24,13 @@ type Func struct {
 
 type BuiltinFunc struct {
 	*Func
+	Body func([]SExpr, *Env) (SExpr, error)
 }
 
 type UserFunc struct {
 	*Func
+	ParamNames []string
+	Body       SExpr
 }
 
 func (b *procBase) Name() string {
