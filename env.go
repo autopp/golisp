@@ -21,3 +21,17 @@ func (e *Env) Define(k string, v SExpr) error {
 	e.body[k] = v
 	return nil
 }
+
+func (e *Env) Lookup(k string) (SExpr, bool) {
+	v, ok := e.body[k]
+
+	if ok {
+		return v, true
+	} else {
+		if e.prev != nil {
+			return e.prev.Lookup(k)
+		} else {
+			return GetNil(), false
+		}
+	}
+}
