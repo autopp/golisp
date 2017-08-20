@@ -13,10 +13,12 @@ func TestEvalSExpr(t *testing.T) {
 		{True, True, false},
 		{Number(42), Number(42), false},
 		{GetNil(), GetNil(), false},
+		{Symbol("foo"), True, false},
+		{Symbol("bar"), GetNil(), true},
 	}
 
 	for _, tt := range cases {
-		e := NewEnv(nil, nil)
+		e := NewEnv(map[string]SExpr{"foo": True}, nil)
 		got, err := EvalSExpr(tt.in, e)
 
 		if tt.err {
