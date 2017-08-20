@@ -14,7 +14,7 @@ func TestEnvDefine(t *testing.T) {
 		{"bar", True, false},
 		{"foo", True, true},
 	}
-	e := NewEnv(nil)
+	e := NewEnv(nil, nil)
 
 	for _, tt := range cases {
 		err := e.Define(tt.k, tt.v)
@@ -42,10 +42,7 @@ func TestEnvLookup(t *testing.T) {
 		{"baz", GetNil(), false},
 	}
 
-	p := NewEnv(nil)
-	p.Define("bar", True)
-	e := NewEnv(p)
-	e.Define("foo", False)
+	e := NewEnv(map[string]SExpr{"foo": False}, NewEnv(map[string]SExpr{"bar": True}, nil))
 
 	for _, tt := range cases {
 		v, ok := e.Lookup(tt.k)

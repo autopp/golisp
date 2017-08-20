@@ -10,8 +10,11 @@ type Env struct {
 	prev *Env
 }
 
-func NewEnv(prev *Env) *Env {
-	return &Env{make(map[string]SExpr), prev}
+func NewEnv(body map[string]SExpr, prev *Env) *Env {
+	if body == nil {
+		body = make(map[string]SExpr)
+	}
+	return &Env{body, prev}
 }
 
 func (e *Env) Define(k string, v SExpr) error {
