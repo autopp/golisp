@@ -72,3 +72,21 @@ func TestConsString(t *testing.T) {
 		}
 	}
 }
+
+func TestMakeList(t *testing.T) {
+	cases := []struct {
+		in  []SExpr
+		out SExpr
+	}{
+		{[]SExpr{Number(1), Number(2), Number(3)}, NewCons(Number(1), NewCons(Number(2), NewCons(Number(3), GetNil())))},
+		{[]SExpr{}, GetNil()},
+	}
+
+	for _, tt := range cases {
+		got := MakeList(tt.in...)
+
+		if !Eq(got, tt.out) {
+			t.Errorf("MakeList(%v) == %s, want %s", tt.in, got, tt.out)
+		}
+	}
+}

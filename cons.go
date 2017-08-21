@@ -54,3 +54,13 @@ func (cons *Cons) String() string {
 	buf.WriteString(")")
 	return buf.String()
 }
+
+func MakeList(elems ...SExpr) SExpr {
+	var r SExpr = GetNil()
+
+	for i := len(elems) - 1; i >= 0; i-- {
+		r = NewCons(elems[i], r)
+	}
+
+	return r
+}
