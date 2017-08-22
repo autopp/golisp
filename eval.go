@@ -13,9 +13,8 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 		val, ok := e.Lookup(string(v))
 		if ok {
 			return val, nil
-		} else {
-			return GetNil(), errors.New(fmt.Sprintf("%s is not defined", v))
 		}
+		return GetNil(), fmt.Errorf("%s is not defined", v)
 	default:
 		return GetNil(), errors.New("not implemented type")
 	}

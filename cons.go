@@ -12,23 +12,23 @@ func NewCons(car, cdr SExpr) *Cons {
 	return &Cons{car, cdr}
 }
 
-func (sexpr *Cons) IsNil() bool {
+func (cons *Cons) IsNil() bool {
 	return false
 }
 
-func (sexpr *Cons) IsAtom() bool {
+func (cons *Cons) IsAtom() bool {
 	return false
 }
 
-func (sexpr *Cons) IsList() bool {
-	return sexpr.Cdr.IsList()
+func (cons *Cons) IsList() bool {
+	return cons.Cdr.IsList()
 }
 
-func (sexpr *Cons) IsCons() bool {
+func (cons *Cons) IsCons() bool {
 	return true
 }
 
-func (sexpr *Cons) IsProc() bool {
+func (cons *Cons) IsProc() bool {
 	return false
 }
 

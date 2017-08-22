@@ -103,7 +103,7 @@ func tokenize(source io.Reader, filename string) ([]*token, error) {
 				return nil, formatError(filename, line, col, "unreconized charactor")
 			}
 		}
-		line += 1
+		line++
 	}
 	return tokens, nil
 }
