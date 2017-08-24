@@ -1,6 +1,7 @@
 package golisp
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -20,5 +21,18 @@ func TestProcBaseMethods(t *testing.T) {
 
 	if got := b.Optional(); got != op {
 		t.Errorf("%v.Optional() == %d, want %d", b, got, op)
+	}
+}
+
+func TestSpFormString(t *testing.T) {
+	n := "foo"
+	in := NewSpForm(n, 0, 0, func(_ []SExpr, _ *Env) (SExpr, error) {
+		return GetNil(), nil
+	})
+	out := fmt.Sprintf("#<special %s>", n)
+	got := in.String()
+
+	if got != out {
+		t.Errorf("SpForm.String() == %q, want %q", got, out)
 	}
 }
