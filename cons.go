@@ -55,6 +55,19 @@ func (cons *Cons) String() string {
 	return buf.String()
 }
 
+func (cons *Cons) ToSlice() []SExpr {
+	var l []SExpr
+	for {
+		l = append(l, cons.Car)
+		if cons.Cdr.IsNil() {
+			break
+		}
+		cons = cons.Cdr.(*Cons)
+	}
+
+	return l
+}
+
 func MakeList(elems ...SExpr) SExpr {
 	var r SExpr = GetNil()
 
