@@ -15,10 +15,15 @@ func TestEvalSExpr(t *testing.T) {
 		{GetNil(), GetNil(), false},
 		{Symbol("foo"), True, false},
 		{Symbol("bar"), GetNil(), true},
+		{MakeList(Symbol("if"), True, Number(1)), Number(1), false},
+		{MakeList(Symbol("if"), False, Number(1)), GetNil(), false},
+		{MakeList(Symbol("if"), True, Number(1), Number(2)), Number(1), false},
+		{MakeList(Symbol("if"), False, Number(1), Number(2)), Number(2), false},
 	}
 
 	for _, tt := range cases {
-		e := NewEnv(map[string]SExpr{"foo": True}, nil)
+		e := NewGlobalEnv()
+		e.Define("foo", True)
 		got, err := EvalSExpr(tt.in, e)
 
 		if tt.err {

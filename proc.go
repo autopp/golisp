@@ -60,6 +60,10 @@ func (s *SpForm) String() string {
 	return fmt.Sprintf("#<special %s>", s.Name())
 }
 
+func (s *SpForm) Call(args []SExpr, env *Env) (SExpr, error) {
+	return s.Body(args, env)
+}
+
 type Func struct {
 	*procBase
 }
