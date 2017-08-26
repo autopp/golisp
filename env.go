@@ -1,7 +1,6 @@
 package golisp
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -18,8 +17,8 @@ func NewEnv(body map[string]SExpr, prev *Env) *Env {
 }
 
 func (e *Env) Define(k string, v SExpr) error {
-	if v, exists := e.body[k]; exists {
-		return errors.New(fmt.Sprintf("%s is already defined with %s", k, v))
+	if w, exists := e.body[k]; exists {
+		return fmt.Errorf("%s is already defined with %s", k, w)
 	}
 	e.body[k] = v
 	return nil

@@ -61,9 +61,8 @@ func NewGlobalEnv() *Env {
 		} else {
 			if len(args) == 3 {
 				return EvalSExpr(args[2], env)
-			} else {
-				return GetNil(), nil
 			}
+			return GetNil(), nil
 		}
 	})
 
