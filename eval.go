@@ -26,7 +26,23 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 		if !p.IsProc() {
 			return GetNil(), fmt.Errorf("cannot call %s", p)
 		}
-		return p.(Proc).Call(v.Cdr.(*Cons).ToSlice(), e)
+
+		proc := p.(Proc)
+		args := v.Cdr.(*Cons).ToSlice()
+		argc := len(args)
+
+		if proc.Optional() < 0 && argc < proc.Required() {
+			return GetNil(), fmt.Errorf("got %d arguments, want %d or more", argc, proc.Required())
+		}
+
+		if argc < proc.Required() || argc > proc.Required()+proc.Optional() {
+			if proc.Optional() == 0 {
+				return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Optional())
+			}
+			return GetNil(), fmt.Errorf("got %d arguments, want between %d to %d", argc, proc.Required(), proc.Required()+proc.Optional())
+		}
+
+		return proc.Call(args, e)
 	default:
 		return GetNil(), errors.New("not implemented type")
 	}
