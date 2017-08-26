@@ -50,5 +50,9 @@ func NewGlobalEnv() *Env {
 			}
 		}
 	})
+
+	builtins["quote"] = NewSpForm("quote", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		return args[0], nil
+	})
 	return NewEnv(builtins, nil)
 }

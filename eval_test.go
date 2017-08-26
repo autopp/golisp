@@ -19,6 +19,8 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("if"), False, Number(1)), GetNil(), false},
 		{MakeList(Symbol("if"), True, Number(1), Number(2)), Number(1), false},
 		{MakeList(Symbol("if"), False, Number(1), Number(2)), Number(2), false},
+		{MakeList(Symbol("quote"), Symbol("foo")), Symbol("foo"), false},
+		{MakeList(Symbol("quote"), MakeList(Number(1), Number(2))), MakeList(Number(1), Number(2)), false},
 	}
 
 	for _, tt := range cases {
@@ -31,8 +33,8 @@ func TestEvalSExpr(t *testing.T) {
 				t.Errorf("EvalSExpr(%s, %s) == (%s, nil), want error", tt.in, e, got)
 			}
 		} else {
-			if got != tt.out || err != nil {
-				t.Errorf("EvalSExpr(%s, %s) == (%s, %s), want (%s, nil)", tt.in, e, got, err, tt.out)
+			if !Eq(got, tt.out) || err != nil {
+				t.Errorf("EvalSExpr(%v, %v) == (%v, %v), want (%s, nil)", tt.in, e, got, err, tt.out)
 			}
 		}
 	}
