@@ -68,6 +68,13 @@ type Func struct {
 	*procBase
 }
 
+func (f *Func) String() string {
+	if f.Name() == "" {
+		return "#<lambda>"
+	}
+	return fmt.Sprintf("#<lambda %s>", f.Name())
+}
+
 type BuiltinFunc struct {
 	*Func
 	Body func([]SExpr, *Env) (SExpr, error)
