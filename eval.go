@@ -28,18 +28,28 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 		}
 
 		proc := p.(Proc)
-		args := v.Cdr.(*Cons).ToSlice()
-		argc := len(args)
 
-		if proc.Optional() < 0 && argc < proc.Required() {
-			return GetNil(), fmt.Errorf("got %d arguments, want %d or more", argc, proc.Required())
+		var args []SExpr
+		var argc int
+		if v.Cdr.IsNil() {
+			argc = 0
+			args = make([]SExpr, 0)
+		} else {
+			args = v.Cdr.(*Cons).ToSlice()
+			argc = len(args)
 		}
 
-		if argc < proc.Required() || argc > proc.Required()+proc.Optional() {
-			if proc.Optional() == 0 {
-				return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Optional())
+		if proc.Optional() < 0 {
+			if argc < proc.Required() {
+				return GetNil(), fmt.Errorf("got %d arguments, want %d or more", argc, proc.Required())
 			}
-			return GetNil(), fmt.Errorf("got %d arguments, want between %d to %d", argc, proc.Required(), proc.Required()+proc.Optional())
+		} else {
+			if argc < proc.Required() || argc > proc.Required()+proc.Optional() {
+				if proc.Optional() == 0 {
+					return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Optional())
+				}
+				return GetNil(), fmt.Errorf("got %d arguments, want between %d to %d", argc, proc.Required(), proc.Required()+proc.Optional())
+			}
 		}
 
 		return proc.Call(args, e)
