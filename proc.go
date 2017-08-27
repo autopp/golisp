@@ -80,6 +80,33 @@ type BuiltinFunc struct {
 	Body func([]SExpr, *Env) (SExpr, error)
 }
 
+func (f *Func) evalArgs(args []SExpr, env *Env) ([]SExpr, error) {
+	r := make([]SExpr, len(args))
+
+	for i, a := range args {
+		x, err := EvalSExpr(a, env)
+		if err != nil {
+			return nil, err
+		}
+		r[i] = x
+	}
+	return r, nil
+}
+
+func NewBuiltinFunc(name string, required, optional int, body func([]SExpr, *Env) (SExpr, error)) *BuiltinFunc {
+	return &BuiltinFunc{Func: &Func{procBase: &procBase{name: name, required: required, optional: optional}}, Body: body}
+}
+
+func (f *BuiltinFunc) Call(args []SExpr, env *Env) (SExpr, error) {
+	args, err := f.evalArgs(args, env)
+
+	if err != nil {
+		return GetNil(), err
+	}
+
+	return f.Body(args, env)
+}
+
 type UserFunc struct {
 	*Func
 	ParamNames []string
