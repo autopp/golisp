@@ -79,5 +79,18 @@ func NewGlobalEnv() *Env {
 	builtins["quote"] = NewSpForm("quote", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
 		return args[0], nil
 	})
+
+	builtins["+"] = NewBuiltinFunc("+", 0, -1, func(args []SExpr, env *Env) (SExpr, error) {
+		r := 0
+		for i, x := range args {
+			n, ok := x.(Number)
+			if !ok {
+				return GetNil(), fmt.Errorf("%d argument is not a number", i+1)
+			}
+			r += int(n)
+		}
+
+		return Number(r), nil
+	})
 	return NewEnv(builtins, nil)
 }
