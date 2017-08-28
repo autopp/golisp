@@ -84,6 +84,26 @@ func NewGlobalEnv() *Env {
 		return NewCons(args[0], args[1]), nil
 	})
 
+	builtins["car"] = NewBuiltinFunc("car", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		x, ok := args[0].(*Cons)
+
+		if !ok {
+			return nil, fmt.Errorf("car: got %s, want cons", args[0])
+		}
+
+		return x.Car, nil
+	})
+
+	builtins["cdr"] = NewBuiltinFunc("cdr", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		x, ok := args[0].(*Cons)
+
+		if !ok {
+			return nil, fmt.Errorf("car: got %s, want cons", args[0])
+		}
+
+		return x.Cdr, nil
+	})
+
 	builtins["+"] = NewBuiltinFunc("+", 0, -1, func(args []SExpr, env *Env) (SExpr, error) {
 		r := 0
 		for i, x := range args {

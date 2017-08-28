@@ -4,6 +4,10 @@ import (
 	"testing"
 )
 
+func quote(s SExpr) SExpr {
+	return MakeList(Symbol("quote"), s)
+}
+
 func TestEvalSExpr(t *testing.T) {
 	cases := []struct {
 		in, out SExpr
@@ -27,6 +31,10 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("quote"), Symbol("foo")), Symbol("foo"), false},
 		{MakeList(Symbol("quote"), MakeList(Number(1), Number(2))), MakeList(Number(1), Number(2)), false},
 		{MakeList(Symbol("cons"), False, True), NewCons(False, True), false},
+		{MakeList(Symbol("car"), quote(NewCons(False, True))), False, false},
+		{MakeList(Symbol("car"), GetNil()), GetNil(), true},
+		{MakeList(Symbol("cdr"), quote(NewCons(False, True))), True, false},
+		{MakeList(Symbol("cdr"), GetNil()), GetNil(), true},
 		{MakeList(Symbol("+")), Number(0), false},
 		{MakeList(Symbol("+"), Number(1)), Number(1), false},
 		{MakeList(Symbol("+"), Number(41), Number(1)), Number(42), false},
