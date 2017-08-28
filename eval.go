@@ -46,7 +46,7 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 		} else {
 			if argc < proc.Required() || argc > proc.Required()+proc.Optional() {
 				if proc.Optional() == 0 {
-					return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Optional())
+					return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Required())
 				}
 				return GetNil(), fmt.Errorf("got %d arguments, want between %d to %d", argc, proc.Required(), proc.Required()+proc.Optional())
 			}
