@@ -80,6 +80,10 @@ func NewGlobalEnv() *Env {
 		return args[0], nil
 	})
 
+	builtins["cons"] = NewBuiltinFunc("cons", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		return NewCons(args[0], args[1]), nil
+	})
+
 	builtins["+"] = NewBuiltinFunc("+", 0, -1, func(args []SExpr, env *Env) (SExpr, error) {
 		r := 0
 		for i, x := range args {
