@@ -35,6 +35,8 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("car"), GetNil()), GetNil(), true},
 		{MakeList(Symbol("cdr"), quote(NewCons(False, True))), True, false},
 		{MakeList(Symbol("cdr"), GetNil()), GetNil(), true},
+		{MakeList(Symbol("null"), GetNil()), True, false},
+		{MakeList(Symbol("null"), Number(42)), False, false},
 		{MakeList(Symbol("+")), Number(0), false},
 		{MakeList(Symbol("+"), Number(1)), Number(1), false},
 		{MakeList(Symbol("+"), Number(41), Number(1)), Number(42), false},

@@ -104,6 +104,10 @@ func NewGlobalEnv() *Env {
 		return x.Cdr, nil
 	})
 
+	builtins["null"] = NewBuiltinFunc("null", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		return Bool(args[0].IsNil()), nil
+	})
+
 	builtins["+"] = NewBuiltinFunc("+", 0, -1, func(args []SExpr, env *Env) (SExpr, error) {
 		r := 0
 		for i, x := range args {
