@@ -40,7 +40,7 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("+")), Number(0), false},
 		{MakeList(Symbol("+"), Number(1)), Number(1), false},
 		{MakeList(Symbol("+"), Number(41), Number(1)), Number(42), false},
-		{MakeList(Symbol("+"), Number(41), Symbol("a")), GetNil(), true},
+		{MakeList(Symbol("+"), Number(41), quote(Symbol("a"))), GetNil(), true},
 	}
 
 	for _, tt := range cases {
