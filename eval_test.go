@@ -8,6 +8,8 @@ func quote(s SExpr) SExpr {
 	return MakeList(Symbol("quote"), s)
 }
 
+var boolCons = quote(NewCons(False, True))
+
 func TestEvalSExpr(t *testing.T) {
 	cases := []struct {
 		in, out SExpr
@@ -37,6 +39,11 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("cdr"), GetNil()), GetNil(), true},
 		{MakeList(Symbol("null"), GetNil()), True, false},
 		{MakeList(Symbol("null"), Number(42)), False, false},
+		{MakeList(Symbol("eq?"), Number(1), Number(1)), True, false},
+		{MakeList(Symbol("eq?"), Number(1), Number(2)), False, false},
+		{MakeList(Symbol("eq?"), GetNil(), GetNil()), True, false},
+		{MakeList(Symbol("eq?"), boolCons, boolCons), True, false},
+		{MakeList(Symbol("eq?"), boolCons, quote(NewCons(False, True))), False, false},
 		{MakeList(Symbol("+")), Number(0), false},
 		{MakeList(Symbol("+"), Number(1)), Number(1), false},
 		{MakeList(Symbol("+"), Number(41), Number(1)), Number(42), false},

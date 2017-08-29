@@ -108,6 +108,10 @@ func NewGlobalEnv() *Env {
 		return Bool(args[0].IsNil()), nil
 	})
 
+	builtins["eq?"] = NewBuiltinFunc("eq?", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		return Bool(args[0] == args[1]), nil
+	})
+
 	builtins["+"] = NewBuiltinFunc("+", 0, -1, func(args []SExpr, env *Env) (SExpr, error) {
 		r := 0
 		for i, x := range args {
