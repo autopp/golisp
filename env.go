@@ -37,3 +37,8 @@ func (e *Env) Lookup(k string) (SExpr, bool) {
 		}
 	}
 }
+
+func (e *Env) IsDefined(k string) bool {
+	_, ok := e.body[k]
+	return ok
+}

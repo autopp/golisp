@@ -52,3 +52,20 @@ func TestEnvLookup(t *testing.T) {
 		}
 	}
 }
+
+func TestEnvIsDefined(t *testing.T) {
+	cases := []struct {
+		in  string
+		out bool
+	}{}
+
+	e := NewEnv(map[string]SExpr{"foo": False}, NewEnv(map[string]SExpr{"bar": True}, nil))
+
+	for _, tt := range cases {
+		got := e.IsDefined(tt.in)
+
+		if got != tt.out {
+			t.Errorf("%s.IsDefined(%q) == %v, want %v", e, tt.in, got, tt.out)
+		}
+	}
+}
