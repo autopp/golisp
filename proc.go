@@ -112,3 +112,7 @@ type UserFunc struct {
 	ParamNames []string
 	Body       SExpr
 }
+
+func NewUserFunc(name string, paramNames []string, body SExpr) *UserFunc {
+	return &UserFunc{Func: &Func{procBase: &procBase{name: name, required: len(paramNames), optional: 0}}, ParamNames: paramNames, Body: body}
+}
