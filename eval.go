@@ -96,6 +96,18 @@ func NewGlobalEnv() *Env {
 		return s, nil
 	})
 
+	builtins["begin"] = NewSpForm("begin", 1, -1, func(args []SExpr, env *Env) (SExpr, error) {
+		for i := 0; i < len(args)-1; i++ {
+			_, err := EvalSExpr(args[i], env)
+
+			if err != nil {
+				return GetNil(), err
+			}
+		}
+
+		return EvalSExpr(args[len(args)-1], env)
+	})
+
 	builtins["cons"] = NewBuiltinFunc("cons", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
 		return NewCons(args[0], args[1]), nil
 	})
