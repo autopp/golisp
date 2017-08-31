@@ -116,3 +116,19 @@ type UserFunc struct {
 func NewUserFunc(name string, paramNames []string, body SExpr) *UserFunc {
 	return &UserFunc{Func: &Func{procBase: &procBase{name: name, required: len(paramNames), optional: 0}}, ParamNames: paramNames, Body: body}
 }
+
+func (f *UserFunc) Call(args []SExpr, env *Env) (SExpr, error) {
+	args, err := f.evalArgs(args, env)
+
+	if err != nil {
+		return GetNil(), err
+	}
+
+	m := make(map[string]SExpr, len(args))
+	for i := 0; i < len(args); i++ {
+		m[f.ParamNames[i]] = args[i]
+	}
+
+	e := NewEnv(m, env)
+	return EvalSExpr(f.Body, e)
+}

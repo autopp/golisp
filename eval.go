@@ -80,6 +80,25 @@ func NewGlobalEnv() *Env {
 		return args[0], nil
 	})
 
+	builtins["lambda"] = NewSpForm("lambda", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		if !args[0].IsList() {
+			return GetNil(), errors.New("lambda: 1st argument shoud be a list of parameter")
+		}
+
+		s := ToSlice(args[0])
+		p := make([]string, len(s))
+
+		for i := 0; i < len(s); i++ {
+			if n, ok := s[i].(Symbol); !ok {
+				return GetNil(), errors.New("lambda: 1st argument shoud be a list of parameter")
+			} else {
+				p[i] = string(n)
+			}
+		}
+
+		return NewUserFunc("", p, args[1]), nil
+	})
+
 	builtins["define"] = NewSpForm("define", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
 		s, ok := args[0].(Symbol)
 
