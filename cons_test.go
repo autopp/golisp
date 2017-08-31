@@ -73,34 +73,6 @@ func TestConsString(t *testing.T) {
 	}
 }
 
-func TestToSlice(t *testing.T) {
-	cases := []struct {
-		in  *Cons
-		out []SExpr
-	}{
-		{NewCons(Number(1), GetNil()), []SExpr{Number(1)}},
-		{NewCons(Number(1), NewCons(Number(2), GetNil())), []SExpr{Number(1), Number(2)}},
-	}
-
-	compareSlice := func(x, y []SExpr) bool {
-		for i := 0; i < len(x); i++ {
-			if !Eq(x[i], y[i]) {
-				return false
-			}
-		}
-
-		return true
-	}
-
-	for _, tt := range cases {
-		got := tt.in.ToSlice()
-
-		if len(got) != len(tt.out) || !compareSlice(got, tt.out) {
-			t.Errorf("%s.TestToSlice == %s, want %s", tt.in, got, tt.out)
-		}
-	}
-}
-
 func TestMakeList(t *testing.T) {
 	cases := []struct {
 		in  []SExpr

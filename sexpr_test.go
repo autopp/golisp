@@ -64,3 +64,32 @@ func TestEqWithSameTypes(t *testing.T) {
 		}
 	}
 }
+
+func TestToSlice(t *testing.T) {
+	cases := []struct {
+		in  SExpr
+		out []SExpr
+	}{
+		{GetNil(), []SExpr{}},
+		{NewCons(Number(1), GetNil()), []SExpr{Number(1)}},
+		{NewCons(Number(1), NewCons(Number(2), GetNil())), []SExpr{Number(1), Number(2)}},
+	}
+
+	compareSlice := func(x, y []SExpr) bool {
+		for i := 0; i < len(x); i++ {
+			if !Eq(x[i], y[i]) {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	for _, tt := range cases {
+		got := ToSlice(tt.in)
+
+		if len(got) != len(tt.out) || !compareSlice(got, tt.out) {
+			t.Errorf("ToSlice(%s) == %s, want %s", tt.in, got, tt.out)
+		}
+	}
+}

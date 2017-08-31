@@ -32,3 +32,12 @@ func Eq(x, y SExpr) bool {
 
 	return false
 }
+
+func ToSlice(x SExpr) []SExpr {
+	var s []SExpr
+	for ; !x.IsNil(); x = x.(*Cons).Cdr {
+		s = append(s, x.(*Cons).Car)
+	}
+
+	return s
+}

@@ -35,7 +35,7 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 			argc = 0
 			args = make([]SExpr, 0)
 		} else {
-			args = v.Cdr.(*Cons).ToSlice()
+			args = ToSlice(v.Cdr)
 			argc = len(args)
 		}
 
