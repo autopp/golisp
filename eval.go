@@ -96,7 +96,7 @@ func NewGlobalEnv() *Env {
 			}
 		}
 
-		return NewUserFunc("", p, args[1]), nil
+		return NewUserFunc("", p, args[1], env), nil
 	})
 
 	builtins["define"] = NewSpForm("define", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
