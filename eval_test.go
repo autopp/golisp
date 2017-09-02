@@ -33,6 +33,7 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("quote"), Symbol("foo")), Symbol("foo"), false},
 		{MakeList(Symbol("quote"), MakeList(Number(1), Number(2))), MakeList(Number(1), Number(2)), false},
 		{MakeList(MakeList(Symbol("lambda"), MakeList(Symbol("x")), MakeList(Symbol("+"), Number(1), Symbol("x"))), Number(41)), Number(42), false},
+		{MakeList(MakeList(MakeList(Symbol("lambda"), MakeList(Symbol("x")), MakeList(Symbol("lambda"), MakeList(Symbol("y")), MakeList(Symbol("+"), Symbol("x"), Symbol("y")))), Number(1)), Number(41)), Number(42), false},
 		{MakeList(Symbol("lambda"), NewCons(Symbol("x"), Symbol("y")), MakeList(Symbol("+"), Number(1), Symbol("x"))), GetNil(), true},
 		{MakeList(Symbol("lambda"), MakeList(Symbol("x"), Number(1)), MakeList(Symbol("+"), Number(1), Symbol("x"))), GetNil(), true},
 		{MakeList(Symbol("define"), Symbol("x"), Number(42)), Symbol("x"), false},
