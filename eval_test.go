@@ -37,8 +37,16 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("lambda"), NewCons(Symbol("x"), Symbol("y")), MakeList(Symbol("+"), Number(1), Symbol("x"))), GetNil(), true},
 		{MakeList(Symbol("lambda"), MakeList(Symbol("x"), Number(1)), MakeList(Symbol("+"), Number(1), Symbol("x"))), GetNil(), true},
 		{MakeList(Symbol("define"), Symbol("x"), Number(42)), Symbol("x"), false},
+		{MakeList(Symbol("define"), MakeList(Symbol("f"), Symbol("x")), MakeList(Symbol("+"), Symbol("x"), Number(1))), Symbol("f"), false},
 		{MakeList(Symbol("define"), Symbol("foo"), Number(42)), GetNil(), true},
 		{MakeList(Symbol("begin"), MakeList(Symbol("define"), Symbol("x"), Number(41)), MakeList(Symbol("+"), Symbol("x"), Number(1))), Number(42), false},
+		{
+			MakeList(
+				Symbol("begin"),
+				MakeList(Symbol("define"), MakeList(Symbol("f"), Symbol("x")), MakeList(Symbol("+"), Symbol("x"), Number(1))),
+				MakeList(Symbol("f"), Number(41))),
+			Number(42), false,
+		},
 		{MakeList(Symbol("begin"), Symbol("x"), MakeList(Symbol("+"), Symbol("x"), Number(1))), GetNil(), true},
 		{MakeList(Symbol("cons"), False, True), NewCons(False, True), false},
 		{MakeList(Symbol("car"), quote(NewCons(False, True))), False, false},

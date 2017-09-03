@@ -100,17 +100,39 @@ func NewGlobalEnv() *Env {
 	})
 
 	builtins["define"] = NewSpForm("define", 2, 0, func(args []SExpr, env *Env) (SExpr, error) {
-		s, ok := args[0].(Symbol)
+		var v SExpr
+		var err error
 
-		if !ok {
-			return GetNil(), errors.New("define: want symbol at 1st argument")
+		s, ok := args[0].(Symbol)
+		if ok {
+			v, err = EvalSExpr(args[1], env)
+			if err != nil {
+				return GetNil(), err
+			}
+		} else {
+			if !args[0].IsList() || args[0].IsNil() {
+				return GetNil(), fmt.Errorf("define: 1 st argument shoud be a symbol or list of symbol")
+			}
+
+			sl := ToSlice(args[0])
+			p := make([]string, len(sl))
+
+			for i := 0; i < len(sl); i++ {
+				if n, ok := sl[i].(Symbol); !ok {
+					return GetNil(), errors.New("define: 1 st argument shoud be a symbol or list of symbol")
+				} else {
+					p[i] = string(n)
+				}
+			}
+
+			s = sl[0].(Symbol)
+			v = NewUserFunc(p[0], p[1:], args[1], env)
 		}
 
 		if env.IsDefined(string(s)) {
-			return GetNil(), fmt.Errorf("%s is already defined at current scope", s)
+			return GetNil(), fmt.Errorf("define: %s is already defined at current scope", s)
 		}
-
-		env.Define(string(s), args[1])
+		env.Define(string(s), v)
 
 		return s, nil
 	})
@@ -176,4 +198,8 @@ func NewGlobalEnv() *Env {
 		return Number(r), nil
 	})
 	return NewEnv(builtins, nil)
+}
+
+func isSymbolList(s SExpr) {
+
 }
