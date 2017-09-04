@@ -197,9 +197,10 @@ func NewGlobalEnv() *Env {
 
 		return Number(r), nil
 	})
+
+	builtins["eval"] = NewBuiltinFunc("eval", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		return EvalSExpr(args[0], env)
+	})
+
 	return NewEnv(builtins, nil)
-}
-
-func isSymbolList(s SExpr) {
-
 }

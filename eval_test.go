@@ -8,6 +8,10 @@ func quote(s SExpr) SExpr {
 	return MakeList(Symbol("quote"), s)
 }
 
+func begin(s ...SExpr) SExpr {
+	return MakeList(append([]SExpr{Symbol("begin")}, s...)...)
+}
+
 var boolCons = quote(NewCons(False, True))
 
 func TestEvalSExpr(t *testing.T) {
@@ -69,6 +73,12 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("+"), Number(1)), Number(1), false},
 		{MakeList(Symbol("+"), Number(41), Number(1)), Number(42), false},
 		{MakeList(Symbol("+"), Number(41), quote(Symbol("a"))), GetNil(), true},
+		{
+			begin(
+				MakeList(Symbol("define"), Symbol("x"), quote(MakeList(Symbol("+"), Number(1), Number(41)))),
+				MakeList(Symbol("eval"), Symbol("x"))),
+			Number(42), false,
+		},
 	}
 
 	for _, tt := range cases {
