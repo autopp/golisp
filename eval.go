@@ -28,31 +28,8 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 		}
 
 		proc := p.(Proc)
-
-		var args []SExpr
-		var argc int
-		if v.Cdr.IsNil() {
-			argc = 0
-			args = make([]SExpr, 0)
-		} else {
-			args = ToSlice(v.Cdr)
-			argc = len(args)
-		}
-
-		if proc.Optional() < 0 {
-			if argc < proc.Required() {
-				return GetNil(), fmt.Errorf("got %d arguments, want %d or more", argc, proc.Required())
-			}
-		} else {
-			if argc < proc.Required() || argc > proc.Required()+proc.Optional() {
-				if proc.Optional() == 0 {
-					return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Required())
-				}
-				return GetNil(), fmt.Errorf("got %d arguments, want between %d to %d", argc, proc.Required(), proc.Required()+proc.Optional())
-			}
-		}
-
-		return proc.Call(args, e)
+		args := ToSlice(v.Cdr)
+		return applyProc(proc, args, e)
 	default:
 		return GetNil(), errors.New("not implemented type")
 	}
@@ -203,4 +180,23 @@ func NewGlobalEnv() *Env {
 	})
 
 	return NewEnv(builtins, nil)
+}
+
+func applyProc(proc Proc, args []SExpr, env *Env) (SExpr, error) {
+	argc := len(args)
+
+	if proc.Optional() < 0 {
+		if argc < proc.Required() {
+			return GetNil(), fmt.Errorf("got %d arguments, want %d or more", argc, proc.Required())
+		}
+	} else {
+		if argc < proc.Required() || argc > proc.Required()+proc.Optional() {
+			if proc.Optional() == 0 {
+				return GetNil(), fmt.Errorf("got %d arguments, want %d", argc, proc.Required())
+			}
+			return GetNil(), fmt.Errorf("got %d arguments, want between %d to %d", argc, proc.Required(), proc.Required()+proc.Optional())
+		}
+	}
+
+	return proc.Call(args, env)
 }
