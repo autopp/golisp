@@ -179,6 +179,21 @@ func NewGlobalEnv() *Env {
 		return EvalSExpr(args[0], env)
 	})
 
+	builtins["apply"] = NewBuiltinFunc("apply", 1, -1, func(args []SExpr, env *Env) (SExpr, error) {
+		f, ok := args[0].(Proc)
+
+		if !ok || !f.IsFunc() {
+			return GetNil(), errors.New("apply: 1st argument shoud be function")
+		}
+
+		r, err := applyProc(f, args[1:], env)
+
+		if err != nil {
+			return r, errors.New("apply: error occured: " + err.Error())
+		}
+		return r, nil
+	})
+
 	return NewEnv(builtins, nil)
 }
 

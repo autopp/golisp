@@ -7,6 +7,7 @@ type Proc interface {
 	Name() string
 	Required() int
 	Optional() int
+	IsFunc() bool
 }
 
 type procBase struct {
@@ -64,6 +65,10 @@ func (s *SpForm) Call(args []SExpr, env *Env) (SExpr, error) {
 	return s.Body(args, env)
 }
 
+func (s *SpForm) IsFunc() bool {
+	return false
+}
+
 type Func struct {
 	*procBase
 }
@@ -73,6 +78,10 @@ func (f *Func) String() string {
 		return "#<lambda>"
 	}
 	return fmt.Sprintf("#<lambda %s>", f.Name())
+}
+
+func (f *Func) IsFunc() bool {
+	return true
 }
 
 type BuiltinFunc struct {
