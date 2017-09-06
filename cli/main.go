@@ -3,9 +3,12 @@ package main
 import (
   "github.com/autopp/golisp"
   "fmt"
+  "io"
+  "os"
 )
 
 func main() {
-  var nilv golisp.Nil
+
+  switch
   fmt.Println(nilv)
 }

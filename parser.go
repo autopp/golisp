@@ -7,7 +7,6 @@ import (
 	"io"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 type tokenKind int
@@ -63,8 +62,8 @@ func formatErrorWithToken(token *token, format string, args ...interface{}) erro
 	return formatError(token.filename, token.line, token.col, format, args...)
 }
 
-func Parse(source, filename string) ([]SExpr, error) {
-	tokens, err := tokenize(strings.NewReader(source), filename)
+func Parse(source io.Reader, filename string) ([]SExpr, error) {
+	tokens, err := tokenize(source, filename)
 	if err != nil {
 		return nil, err
 	}

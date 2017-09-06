@@ -1,6 +1,7 @@
 package golisp
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -23,7 +24,7 @@ func TestParse(t *testing.T) {
 
 	for _, tt := range cases {
 		filename := tt.name + ".lsp"
-		got, err := Parse(tt.source, filename)
+		got, err := Parse(strings.NewReader(tt.source), filename)
 		if tt.err {
 			if err == nil {
 				t.Errorf("Parse(%q, %q) == (%s, nil), want error", tt.source, filename, got)
