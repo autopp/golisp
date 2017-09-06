@@ -63,20 +63,23 @@ func formatErrorWithToken(token *token, format string, args ...interface{}) erro
 	return formatError(token.filename, token.line, token.col, format, args...)
 }
 
-func Parse(source, filename string) (SExpr, error) {
+func Parse(source, filename string) ([]SExpr, error) {
 	tokens, err := tokenize(strings.NewReader(source), filename)
 	if err != nil {
-		return GetNil(), err
+		return nil, err
 	}
-	sexpr, rest, err := parseSExpr(tokens)
-	if err != nil {
-		return GetNil(), err
-	}
-	if len(rest) > 0 {
-		return GetNil(), formatError(filename, rest[0].line, rest[0].col, "expected EOS, but got `%s'", rest[0])
+	ret := make([]SExpr, 0)
+	for len(tokens) > 0 {
+		var sexpr SExpr
+		var err error
+		sexpr, tokens, err = parseSExpr(tokens)
+		if err != nil {
+			return nil, err
+		}
+		ret = append(ret, sexpr)
 	}
 
-	return sexpr, err
+	return ret, err
 }
 
 func tokenize(source io.Reader, filename string) ([]*token, error) {

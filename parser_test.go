@@ -18,7 +18,7 @@ func TestParse(t *testing.T) {
 		{"let-rec", "symbol", Symbol("let-rec"), false},
 		{"( )", "nil", GetNil(), false},
 		{"(#t . #f)", "pair", NewCons(True, False), false},
-		{"() foo", "extra", GetNil(), true},
+		{"() ,", "extra", GetNil(), true},
 	}
 
 	for _, tt := range cases {
@@ -31,7 +31,7 @@ func TestParse(t *testing.T) {
 		} else {
 			if err != nil {
 				t.Errorf("Parse(%q, %q) == (%s, %s), want (%s, nil)", tt.source, filename, got, err, tt.out)
-			} else if !Eq(got, tt.out) {
+			} else if !Eq(got[0], tt.out) {
 				t.Errorf("Parse(%q, %q) == (%s, nil), want (%s, nil)", tt.source, filename, got, tt.out)
 			}
 		}
