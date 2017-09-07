@@ -84,6 +84,7 @@ func TestEvalSExpr(t *testing.T) {
 		{MakeList(Symbol("apply"), Symbol("cons"), Number(1), Number(2)), NewCons(Number(1), Number(2)), "", false},
 		{MakeList(Symbol("apply"), Symbol("cons"), Number(1)), GetNil(), "", true},
 		{MakeList(Symbol("apply"), Symbol("if"), True, Number(42)), GetNil(), "", true},
+		{MakeList(Symbol("display"), quote(MakeList(Number(1), Number(2), Number(3)))), GetNil(), "(1 2 3)\n", false},
 	}
 
 	for _, tt := range cases {

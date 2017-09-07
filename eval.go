@@ -199,6 +199,11 @@ func NewGlobalEnvWithOutput(output io.Writer) *Env {
 		return r, nil
 	})
 
+	builtins["display"] = NewBuiltinFunc("display", 1, 0, func(args []SExpr, env *Env) (SExpr, error) {
+		fmt.Fprintln(env.Output(), args[0])
+		return GetNil(), nil
+	})
+
 	return NewEnvWithOutput(builtins, nil, output)
 }
 
