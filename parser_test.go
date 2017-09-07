@@ -19,6 +19,7 @@ func TestParse(t *testing.T) {
 		{"let-rec", "symbol", Symbol("let-rec"), false},
 		{"( )", "nil", GetNil(), false},
 		{"(#t . #f)", "pair", NewCons(True, False), false},
+		{"(1 2 3)", "list", MakeList(Number(1), Number(2), Number(3)), false},
 		{"() ,", "extra", GetNil(), true},
 	}
 

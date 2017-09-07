@@ -156,7 +156,14 @@ func parseConsRest(tokens []*token) (SExpr, []*token, error) {
 			return GetNil(), rest, formatErrorWithToken(rest[0], "expected `)', but got `%s'", rest[0])
 		}
 		return cdr, rest[1:], nil
+	case rparenToken:
+		return GetNil(), tokens[1:], nil
 	default:
-		return GetNil(), tokens, formatErrorWithToken(tokens[0], "list literal is not implemented")
+		car, rest, err := parseSExpr(tokens)
+		if err != nil {
+			return GetNil(), rest, err
+		}
+		cdr, rest, err := parseConsRest(rest)
+		return NewCons(car, cdr), rest, err
 	}
 }
