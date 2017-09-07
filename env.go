@@ -2,18 +2,38 @@ package golisp
 
 import (
 	"fmt"
+	"io"
+	"os"
 )
 
 type Env struct {
-	body map[string]SExpr
-	prev *Env
+	body   map[string]SExpr
+	prev   *Env
+	output io.Writer
 }
 
 func NewEnv(body map[string]SExpr, prev *Env) *Env {
+	return NewEnvWithOutput(body, prev, nil)
+}
+
+func NewEnvWithOutput(body map[string]SExpr, prev *Env, output io.Writer) *Env {
 	if body == nil {
 		body = make(map[string]SExpr)
 	}
-	return &Env{body, prev}
+
+	if output == nil {
+		if prev != nil {
+			output = prev.Output()
+		} else {
+			output = os.Stdout
+		}
+	}
+
+	return &Env{body, prev, output}
+}
+
+func (e *Env) Output() io.Writer {
+	return e.output
 }
 
 func (e *Env) Define(k string, v SExpr) error {
