@@ -3,6 +3,7 @@ package golisp
 import (
 	"errors"
 	"fmt"
+	"io"
 )
 
 func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
@@ -36,6 +37,10 @@ func EvalSExpr(s SExpr, e *Env) (SExpr, error) {
 }
 
 func NewGlobalEnv() *Env {
+	return NewGlobalEnvWithOutput(nil)
+}
+
+func NewGlobalEnvWithOutput(output io.Writer) *Env {
 	builtins := make(map[string]SExpr)
 	builtins["if"] = NewSpForm("if", 2, 1, func(args []SExpr, env *Env) (SExpr, error) {
 		c, err := EvalSExpr(args[0], env)
@@ -194,7 +199,7 @@ func NewGlobalEnv() *Env {
 		return r, nil
 	})
 
-	return NewEnv(builtins, nil)
+	return NewEnvWithOutput(builtins, nil, output)
 }
 
 func applyProc(proc Proc, args []SExpr, env *Env) (SExpr, error) {
